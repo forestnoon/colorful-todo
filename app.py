@@ -13,8 +13,8 @@ db = SQLAlchemy(app)
 class Task(db.Model):
 
   __tablename__ = "tasks"
-  id = db.Column(db.Integer, primary_key=True, autoincrement=True)
-  date = db.Column(db.Integer)
+  id = db.Column(db.Integer, prymary_key=True)
+  date = db.Column(db.String)
   task_type = db.Column(db.String(200))
   priority = db.Column(db.Integer)
   title = db.Column(db.String(200))
@@ -31,7 +31,7 @@ def index():
 @app.route('/create', methods=['POST'])
 def create():
   task = Task()
-  task.date = str(datetime.today().year) + "/" + str(datetime.today().month) + "/" + str(datetime.today().day) + " " + str(datetime.today().hour) + "時" + str(datetime.today().minute) + "分"
+  task.date = str(datetime.today().year) + "/" + str(datetime.today().month) + "/" + str(datetime.today().day) + " " + str(datetime.today().hour) + "/" + str(datetime.today().minute)
   task.task_type = request.form.get('task_type')
   task.priority = request.form.get('priority')
   task.title = request.form.get('title')
@@ -69,7 +69,7 @@ def update(id):
    
     task = Task.query.get(id)
     
-    task.date = str(datetime.today().year) + "/" + str(datetime.today().month) + "/" + str(datetime.today().day) + " " + str(datetime.today().hour) + "時" + str(datetime.today().minute) + "分"
+    task.date = str(datetime.today().year) + "/" + str(datetime.today().month) + "/" + str(datetime.today().day) + " " + str(datetime.today().hour) + "/" + str(datetime.today().minute) 
     task.task_type = request.form.get('task_type')
     task.priority = request.form.get('priority')
     task.title = request.form.get('title')
@@ -83,5 +83,5 @@ def update(id):
 
 
 if __name__ == "__main__":
-  # app.debug = True
-  app.run()
+  app.debug = True
+  app.run(host="localhost")
