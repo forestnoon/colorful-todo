@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+  <link rel="stylesheet" href="{{url_for('static',filename='style.css')}}">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <link href="https://use.fontawesome.com/releases/v5.6.1/css/all.css" rel="stylesheet">
+  <title>Todo Apply</title>
+
+</head>
+<body> 
+
+<!-- 編集フォーム -->
+<div class="wrapper mx-auto">
+  <form action="/update/{{task.id}}" method="POST" class=" my-5 px-3 border border-success rounded">
+    <h1 class="text-center my-3">EDIT FORM</h1>
+  
+    <div class="row">
+      <div class="form-group col-md-3">
+        <label for="task_type">type:</label>
+        <select class="form-control fa" name="task_type">
+          <option class="fa" value="job">&#xf1ad; job</option>
+          <option class="fa" value="housework">&#xf015; housework</option>
+          <option class="fa" value="study">&#xf303; study</option>
+          <option class="fa" value="relationship">&#xf500; relationship</option>
+          <option class="fa" value="fitness">&#xf44b; fitness</option>
+          <option class="fa" value="health">&#xf469; health</option>
+        </select>
+      </div>
+  
+      <div class="form-group col-md-3">
+        <label for="priority fa">priority:</label>
+        <select class="form-control" name="priority">
+          <option value="1">1</option>
+          <option value="2">2</option>
+          <option value="3">3</option>
+          <option value="4">4</option>
+          <option value="5">5</option>
+        </select>
+      </div>
+  
+      <div class="form-group col-md-6">
+        <label for="title">title:</label>
+        <input type="text" class="form-control" name="title" placeholder="タイトルを入力(10文字以内)" maxlength="10" value="{{task.title}}">
+      </div>
+  
+    </div><!--/.row-->
+  
+    <div class="row">
+      <div class="form-group col-md-12">
+        <label for="text">text:</label>
+        <input type="text" class="form-control" name="text" placeholder="テキストを入力(20文字以内)" maxlength="20" value="{{task.text}}">
+      </div>
+    </div>
+  
+    <div class="d-flex justify-content-center mb-4">
+      <input type="submit" value="UPDATE" class="btn-block btn-success rounded">
+    </div>
+  </form>
+</div>
+<!--/.入力フォーム-->

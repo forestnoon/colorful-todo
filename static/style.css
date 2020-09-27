@@ -1,0 +1,26 @@
+@charset "UTF-8";
+
+.wrapper {
+  max-width: 960px;
+  height: fit-content;
+}
+
+form {
+  margin: 0 5px;
+}
+
+.box {
+  width: 310px;
+  margin: 5px;
+}
+
+.space-area{
+  height: 100px;
+}
+
+/* responsive */
+@media screen and (max-width: 959px){
+  .box{
+    width: 100%;
+  }
+}
