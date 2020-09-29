@@ -1,27 +1,18 @@
-<!DOCTYPE html>
-<html lang="ja">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-  <link rel="stylesheet" href="{{url_for('static',filename='style.css')}}">
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-  <link href="https://use.fontawesome.com/releases/v5.6.1/css/all.css" rel="stylesheet">
-  <title>Todo Apply</title>
+{% extends "base.html" %}
 
+{% block title%}Todo Apply{% endblock %}
 
-</head>
-<body>
+{% block headline %}COLORFUL TODO{% endblock %}
 
-<div class="wrapper mx-auto">
 
 {% block content %}
+<div class="wrapper mx-auto">
 <!-- 入力フォーム -->
-<form action="/create" method="POST" class="mx-auto my-5 px-3 border border-dark rounded">
+<form action="/" method="POST" class="mx-auto mb-3 px-3 border border-dark rounded">
   <h1 class="text-center my-3">CREATE FORM</h1>
 
   <div class="row">
-    <div class="form-group col-md-3">
+    <div class="form-group col-4 col-md-3">
       <label for="task_type">type:</label>
       <select class="form-control fa" name="task_type">
         <option class="fa" value="job">
@@ -34,7 +25,7 @@
       </select>
     </div>
 
-    <div class="form-group col-md-3">
+    <div class="form-group col-4 col-md-3">
       <label for="priority fa">priority:</label>
       <select class="form-control" name="priority">
         <option value="1">1</option>
@@ -64,14 +55,9 @@
   </div>
 </form>
 
-<!--/.入力フォーム-->
-{% endblock %}
-
-
 {% if tasks|length < 1 %}
     <h4 style="text-align: center">タスクはありません</h4>
 {% else %}
-
 
 
 <!-- card-deck -->
@@ -121,25 +107,26 @@
 
 <!-- priority -->
       {% if task.priority == 1 %}
-      <h6 class="text-center p-1 text-white" style="background-color: #58F898;">priority:{{task.priority}}</h6><!--priority-1-->
+      <h6 class="text-center p-1 text-white priority-1">priority:{{task.priority}}</h6><!--priority-1-->
       {% endif %}
 
       {% if task.priority == 2 %}
-      <h6 class="text-center p-1 text-white" style="background-color: #00AB00;">priority:{{task.priority}}</h6><!--priority-2-->
+      <h6 class="text-center p-1 text-white priority-2">priority:{{task.priority}}</h6><!--priority-2-->
       {% endif %}
 
       {% if task.priority == 3 %}
-      <h6 class="text-center p-1 text-white" style="background-color: #F3BF3F;">priority:{{task.priority}}</h6><!--priority-3-->
+      <h6 class="text-center p-1 text-white priority-3">priority:{{task.priority}}</h6><!--priority-3-->
       {% endif %}
 
       {% if task.priority == 4 %}
-      <h6 class="text-center p-1 text-white" style="background-color: #DB2B00;">priority:{{task.priority}}</h6><!--priority-4-->
+      <h6 class="text-center p-1 text-white priority-4">priority:{{task.priority}}</h6><!--priority-4-->
       {% endif %}
 
       {% if task.priority == 5 %}
-      <h6 class="text-center p-1 text-white" style="background-color: #E7005B;">priority:{{task.priority}}</h6><!--priority-5-->
+      <h6 class="text-center p-1 text-white priority-5">priority:{{task.priority}}</h6><!--priority-5-->
       {% endif %}
 <!-- /.priority -->
+
       <div class="card-text">
         <p>{{task.text}}</p>
       </div>
@@ -157,5 +144,4 @@
 <!-- space-area -->
 <div class="space-area"></div>
 
-</body>
-</html>
+{% endblock %}

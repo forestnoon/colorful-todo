@@ -9,6 +9,7 @@ app.config['SQLALCHEMY_DATABASE_URI'] = "postgres://drzhpnvaysjdcq:2c31e06af27a1
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 db = SQLAlchemy(app)
 
+
 # モデル
 class Task(db.Model):
 

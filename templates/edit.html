@@ -1,24 +1,79 @@
-<!DOCTYPE html>
-<html lang="ja">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-  <link rel="stylesheet" href="{{url_for('static',filename='style.css')}}">
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-  <link href="https://use.fontawesome.com/releases/v5.6.1/css/all.css" rel="stylesheet">
-  <title>Todo Apply</title>
+{% extends "base.html" %}
 
-</head>
-<body> 
+{% block title%}Todo Apply{% endblock %}
 
+{% block headline %}COLORFUL TODO{% endblock %}
+
+
+{% block content %}
 <!-- 編集フォーム -->
 <div class="wrapper mx-auto">
-  <form action="/update/{{task.id}}" method="POST" class=" my-5 px-3 border border-success rounded">
+  <form action="/update/{{task.id}}" method="POST" class=" mb-3 px-3 border border-success rounded">
     <h1 class="text-center my-3">EDIT FORM</h1>
   
     <div class="row">
       <div class="form-group col-md-3">
+        {% if task.task_type == 'job' %}
+        <label for="task_type">type:</label>
+        <select class="form-control fa" name="task_type">
+          <option class="fa" value="job" selected>&#xf1ad; job</option>
+          <option class="fa" value="housework">&#xf015; housework</option>
+          <option class="fa" value="study">&#xf303; study</option>
+          <option class="fa" value="relationship">&#xf500; relationship</option>
+          <option class="fa" value="fitness">&#xf44b; fitness</option>
+          <option class="fa" value="health">&#xf469; health</option>
+        </select>
+        {% endif %}
+
+        {% if task.task_type == 'housework' %}
+        <label for="task_type">type:</label>
+        <select class="form-control fa" name="task_type">
+          <option class="fa" value="job">&#xf1ad; job</option>
+          <option class="fa" value="housework" selected>&#xf015; housework</option>
+          <option class="fa" value="study">&#xf303; study</option>
+          <option class="fa" value="relationship">&#xf500; relationship</option>
+          <option class="fa" value="fitness">&#xf44b; fitness</option>
+          <option class="fa" value="health">&#xf469; health</option>
+        </select>
+        {% endif %}
+
+        {% if task.task_type == 'study' %}
+        <label for="task_type">type:</label>
+        <select class="form-control fa" name="task_type">
+          <option class="fa" value="job">&#xf1ad; job</option>
+          <option class="fa" value="housework">&#xf015; housework</option>
+          <option class="fa" value="study" selected>&#xf303; study</option>
+          <option class="fa" value="relationship">&#xf500; relationship</option>
+          <option class="fa" value="fitness">&#xf44b; fitness</option>
+          <option class="fa" value="health">&#xf469; health</option>
+        </select>
+        {% endif %}
+
+        {% if task.task_type == 'relationship' %}
+        <label for="task_type">type:</label>
+        <select class="form-control fa" name="task_type">
+          <option class="fa" value="job">&#xf1ad; job</option>
+          <option class="fa" value="housework">&#xf015; housework</option>
+          <option class="fa" value="study">&#xf303; study</option>
+          <option class="fa" value="relationship" selected>&#xf500; relationship</option>
+          <option class="fa" value="fitness">&#xf44b; fitness</option>
+          <option class="fa" value="health">&#xf469; health</option>
+        </select>
+        {% endif %}
+
+        {% if task.task_type == 'fitness' %}
+        <label for="task_type">type:</label>
+        <select class="form-control fa" name="task_type">
+          <option class="fa" value="job">&#xf1ad; job</option>
+          <option class="fa" value="housework">&#xf015; housework</option>
+          <option class="fa" value="study">&#xf303; study</option>
+          <option class="fa" value="relationship">&#xf500; relationship</option>
+          <option class="fa" value="fitness" selected>&#xf44b; fitness</option>
+          <option class="fa" value="health">&#xf469; health</option>
+        </select>
+        {% endif %}
+
+        {% if task.task_type == 'health' %}
         <label for="task_type">type:</label>
         <select class="form-control fa" name="task_type">
           <option class="fa" value="job">&#xf1ad; job</option>
@@ -26,21 +81,68 @@
           <option class="fa" value="study">&#xf303; study</option>
           <option class="fa" value="relationship">&#xf500; relationship</option>
           <option class="fa" value="fitness">&#xf44b; fitness</option>
-          <option class="fa" value="health">&#xf469; health</option>
+          <option class="fa" value="health" selected>&#xf469; health</option>
         </select>
+        {% endif %}
       </div>
-  
+
       <div class="form-group col-md-3">
+        {% if task.priority == 1 %}
+        <label for="priority fa">priority:</label>
+        <select class="form-control" name="priority">
+          <option value="1" selected>1</option>
+          <option value="2">2</option>
+          <option value="3">3</option>
+          <option value="4">4</option>
+          <option value="5">5</option>
+        </select>
+        {% endif %}
+
+        {% if task.priority == 2 %}
+        <label for="priority fa">priority:</label>
+        <select class="form-control" name="priority">
+          <option value="1">1</option>
+          <option value="2" selected>2</option>
+          <option value="3">3</option>
+          <option value="4">4</option>
+          <option value="5">5</option>
+        </select>
+        {% endif %}
+
+        {% if task.priority == 3 %}
+        <label for="priority fa">priority:</label>
+        <select class="form-control" name="priority">
+          <option value="1">1</option>
+          <option value="2">2</option>
+          <option value="3" selected>3</option>
+          <option value="4">4</option>
+          <option value="5">5</option>
+        </select>
+        {% endif %}
+
+        {% if task.priority == 4 %}
+        <label for="priority fa">priority:</label>
+        <select class="form-control" name="priority">
+          <option value="1">1</option>
+          <option value="2">2</option>
+          <option value="3">3</option>
+          <option value="4" selected>4</option>
+          <option value="5">5</option>
+        </select>
+        {% endif %}
+
+        {% if task.priority == 5 %}
         <label for="priority fa">priority:</label>
         <select class="form-control" name="priority">
           <option value="1">1</option>
           <option value="2">2</option>
           <option value="3">3</option>
           <option value="4">4</option>
-          <option value="5">5</option>
+          <option value="5" selected>5</option>
         </select>
+        {% endif %}
       </div>
-  
+
       <div class="form-group col-md-6">
         <label for="title">title:</label>
         <input type="text" class="form-control" name="title" placeholder="タイトルを入力(10文字以内)" maxlength="10" value="{{task.title}}">
@@ -60,4 +162,4 @@
     </div>
   </form>
 </div>
-<!--/.入力フォーム-->
+{% endblock %}
