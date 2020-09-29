@@ -14,75 +14,79 @@ db = SQLAlchemy(app)
 class Task(db.Model):
 
   __tablename__ = "tasks"
-  id = db.Column(db.Integer, prymary_key=True)
+  id = db.Column(db.Integer, primary_key=True)
   date = db.Column(db.String)
-  task_type = db.Column(db.String(200))
+  task_type = db.Column(db.String)
   priority = db.Column(db.Integer)
-  title = db.Column(db.String(200))
-  text = db.Column(db.String(200))
+  title = db.Column(db.String)
+  text = db.Column(db.String)
 
 
 # index.html
-@app.route('/', methods=['GET'])
+@app.route('/', methods=['POST','GET'])
 def index():
-  tasks = Task.query.all()
-  return render_template("index.html", tasks=tasks)
+  if request.method == 'POST':
+    task = Task()
+    task.date = str(datetime.today().year) + "/" + str(datetime.today().month) + "/" + str(datetime.today().day) + " " + str(datetime.today().hour) + "/" + str(datetime.today().minute)
+    task.task_type = request.form.get('task_type')
+    task.priority = request.form.get('priority')
+    task.title = request.form.get('title')
+    task.text = request.form.get('text')
 
-# /create
-@app.route('/create', methods=['POST'])
-def create():
-  task = Task()
-  task.date = str(datetime.today().year) + "/" + str(datetime.today().month) + "/" + str(datetime.today().day) + " " + str(datetime.today().hour) + "/" + str(datetime.today().minute)
-  task.task_type = request.form.get('task_type')
-  task.priority = request.form.get('priority')
-  task.title = request.form.get('title')
-  task.text = request.form.get('text')
-  
-  db.session.add(task)
-  db.session.commit()
+    try:
+      db.session.add(task)
+      db.session.commit()
+      return redirect('/')
+    except:
+      return "add failed"
 
-  return redirect(url_for('.index'))
+  else:
+    tasks = Task.query.all()
+    return render_template("index.html", tasks=tasks)
 
 
 # /delete
-@app.route('/delete/<int:id>', methods=['GET'])
+@app.route('/delete/<int:id>')
 def delete(id):
   task = Task.query.get(id)
-  
-  db.session.delete(task) 
-  db.session.commit()
-  db.session.close()
-  # tasks = Task.query.all()
-  return redirect(url_for('.index'))
+
+  try:
+    db.session.delete(task)
+    db.session.commit()
+    db.session.close()
+    return redirect('/')
+  except:
+    return 'There was an problem deleting that task'
 
 
 # /edit
 @app.route('/edit/<int:id>', methods=['GET'])
 def edit(id):
   task = Task.query.get(id)
-
   return render_template('edit.html', task=task)
 
-
 # /update
-@app.route('/update/<int:id>', methods=["POST"])
+@app.route('/update/<int:id>', methods=["GET","POST"])
 def update(id):
-   
     task = Task.query.get(id)
-    
-    task.date = str(datetime.today().year) + "/" + str(datetime.today().month) + "/" + str(datetime.today().day) + " " + str(datetime.today().hour) + "/" + str(datetime.today().minute) 
-    task.task_type = request.form.get('task_type')
-    task.priority = request.form.get('priority')
-    task.title = request.form.get('title')
-    task.text = request.form.get('text')
-  
-    db.session.add(task)
-    db.session.commit()
 
-    return redirect(url_for('.index'))
+    if request.method == 'POST':
+      task.date = str(datetime.today().year) + "/" + str(datetime.today().month) + "/" + str(datetime.today().day) + " " + str(datetime.today().hour) + "/" + str(datetime.today().minute) 
+      task.task_type = request.form.get('task_type')
+      task.priority = request.form.get('priority')
+      task.title = request.form.get('title')
+      task.text = request.form.get('text')
 
+      try:
+        db.session.add(task)
+        db.session.commit()
+        return redirect('/')
+      except:
+        return "edit failed"
+
+    else:
+      return render_template('edit.html',tasks=tasks)
 
 
 if __name__ == "__main__":
-  app.debug = True
-  app.run(host="localhost")
+  app.run()
