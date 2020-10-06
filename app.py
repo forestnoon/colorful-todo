@@ -1,12 +1,14 @@
 from flask import Flask, render_template, url_for, request, redirect, session
 from flask_sqlalchemy import SQLAlchemy
 from datetime import datetime
+from database import SQLALCHEMY_DATABASE_URI as DATABASE_URI
 import os
 
 app = Flask(__name__)
 
-app.config['SQLALCHEMY_DATABASE_URI'] = "postgres://drzhpnvaysjdcq:2c31e06af27a1ba954c00c1e0dc9441be0d3018fe2d404421b917c8ec55e5da6@ec2-34-192-122-0.compute-1.amazonaws.com:5432/d8jgvj9lv98s4j"
+app.config['SQLALCHEMY_DATABASE_URI'] = DATABASE_URI
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+SEACRETKEY = os.urandom(24)
 db = SQLAlchemy(app)
 
 
@@ -27,7 +29,7 @@ class Task(db.Model):
 def index():
   if request.method == 'POST':
     task = Task()
-    task.date = str(datetime.today().year) + "/" + str(datetime.today().month) + "/" + str(datetime.today().day) + " " + str(datetime.today().hour) + "/" + str(datetime.today().minute)
+    task.date = str(datetime.today().year) + "/" + str(datetime.today().month) + "/" + str(datetime.today().day) + " " + str(datetime.today().hour) + ":" + str(datetime.today().minute)
     task.task_type = request.form.get('task_type')
     task.priority = request.form.get('priority')
     task.title = request.form.get('title')
@@ -71,7 +73,7 @@ def update(id):
     task = Task.query.get(id)
 
     if request.method == 'POST':
-      task.date = str(datetime.today().year) + "/" + str(datetime.today().month) + "/" + str(datetime.today().day) + " " + str(datetime.today().hour) + "/" + str(datetime.today().minute) 
+      task.date = str(datetime.today().year) + "/" + str(datetime.today().month) + "/" + str(datetime.today().day) + " " + str(datetime.today().hour) + ":" + str(datetime.today().minute) 
       task.task_type = request.form.get('task_type')
       task.priority = request.form.get('priority')
       task.title = request.form.get('title')
